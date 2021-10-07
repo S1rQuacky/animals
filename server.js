@@ -78,8 +78,8 @@ app.post("/animals", (req, res) => {
     req.body.extinct = req.body.extinct === "on" ? true : false
     Animal.create(req.body, (err, animals) => {
         res.redirect("/animals")
-    })
-})
+    });
+});
 
 ///Edit
 app.get("/animals/:id/edit", (req, res) => {
@@ -94,6 +94,14 @@ app.put("/animals/:id", (req, res) => {
     const id = req.params.id
     req.body.extinct = req.body.extinct === "on" ? true : false
     Animal.findByIdAndUpdate(id, req.body, {new: true}, (err, animals) => {
+        res.redirect("/animals")
+    });
+});
+
+///Destroy
+app.delete("/animals/:id", (req, res) => {
+    const id = req.params.id
+    Animal.findByIdAndRemove(id, (err, animals) => {
         res.redirect("/animals")
     });
 });
