@@ -69,6 +69,17 @@ app.get("/", (req, res) => {
     res.send("Animals up and running")
 });
 
+///New
+app.get("/animals/new", (req, res) => {
+    res.render("animals/new.ejs")
+});
+///Create
+app.post("/animals", (req, res) => {
+    req.body.extinct = req.body.extinct === "on" ? true : false
+    Animal.create(req.body, (err, animals) => {
+        res.redirect("/animals")
+    })
+})
 ///Show
 app.get("/animals/:id", (req, res) => {
     const id = req.params.id
