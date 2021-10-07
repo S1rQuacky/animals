@@ -61,7 +61,7 @@ app.get("/animals/seed", (req, res) => {
 ///Index
 app.get("/animals", (req, res) => {
     Animal.find({}, (err, animals) => {
-        res.render("animals/index.ejs", { animals });
+        res.render("animals/index.ejs", { animals })
     });
 });
 
@@ -80,6 +80,24 @@ app.post("/animals", (req, res) => {
         res.redirect("/animals")
     })
 })
+
+///Edit
+app.get("/animals/:id/edit", (req, res) => {
+    const id = req.params.id
+    Animal.findById(id, (err, animals) => {
+        res.render("animals/edit.ejs", { animals })
+    });
+});
+
+///Update
+app.put("/animals/:id", (req, res) => {
+    const id = req.params.id
+    req.body.extinct = req.body.extinct === "on" ? true : false
+    Animal.findByIdAndUpdate(id, req.body, {new: true}, (err, animals) => {
+        res.redirect("/animals")
+    });
+});
+
 ///Show
 app.get("/animals/:id", (req, res) => {
     const id = req.params.id
