@@ -35,7 +35,7 @@ router.get("/new", (req, res) => {
 ///Create
 router.post("/", (req, res) => {
     req.body.extinct = req.body.extinct === "on" ? true : false
-    Animal.create(req.body, (err, animals) => {
+    Animal.create(req.body, (err, animal) => {
         res.redirect("/animals")
     });
 });
@@ -43,8 +43,8 @@ router.post("/", (req, res) => {
 ///Edit
 router.get("/:id/edit", (req, res) => {
     const id = req.params.id
-    Animal.findById(id, (err, animals) => {
-        res.render("animals/edit.ejs", { animals })
+    Animal.findById(id, (err, animal) => {
+        res.render("animals/edit.ejs", { animal })
     });
 });
 
@@ -52,7 +52,7 @@ router.get("/:id/edit", (req, res) => {
 router.put("/:id", (req, res) => {
     const id = req.params.id
     req.body.extinct = req.body.extinct === "on" ? true : false
-    Animal.findByIdAndUpdate(id, req.body, {new: true}, (err, animals) => {
+    Animal.findByIdAndUpdate(id, req.body, {new: true}, (err, animal) => {
         res.redirect("/animals")
     });
 });
@@ -68,8 +68,9 @@ router.delete("/:id", (req, res) => {
 ///Show
 router.get("/:id", (req, res) => {
     const id = req.params.id
-    Animal.findById(id, (err, animals) => {
-        res.render("animals/show.ejs", { animals });
+    Animal.findById(id, (err, animal) => {
+        console.log(id)
+        res.render("animals/show.ejs", { animal });
     });
 });
 
